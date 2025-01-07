@@ -8,7 +8,7 @@ import java.io.IOException;
 
 public class Computer implements soft.urzi.interfaces.IComputer {
     private static Long id = 0L;
-    private static final String ID_FILE = "/home/mavri/Documents/GitHub/PCGarbage/PCGarbage/src/main/computer_id.json";
+    private static final String ID_FILE = "/home/mavri/Documents/PcGarbage/src/main/computer_id.json";
 
     private final Long computerId;
     private String name;

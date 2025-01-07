@@ -10,8 +10,8 @@ import java.util.List;
 import java.util.Objects;
 
 public class PartsRepository implements soft.urzi.interfaces.IPartsRepository {
-    private static final String PARTS_FILE = "/home/mavri/Documents/GitHub/PCGarbage/PCGarbage/src/main/parts.json";
-    private static final String ID_FILE = "/home/mavri/Documents/GitHub/PCGarbage/PCGarbage/src/main/parts_id.json";
+    private static final String PARTS_FILE = "/home/mavri/Documents/PcGarbage/src/main/parts.json";
+    private static final String ID_FILE = "/home/mavri/Documents/PcGarbage/src/main/parts_id.json";
 
     private static Long idCounter = 0L;
     private List<Part> parts;

@@ -11,7 +11,7 @@ import java.util.List;
 
 public class ComputerRepository implements IComputerRepository {
     private List<Computer> computers;
-    private static final String COMPUTERS_FILE = "/home/mavri/Documents/GitHub/PCGarbage/PCGarbage/src/main/computers.json";
+    private static final String COMPUTERS_FILE = "/home/mavri/Documents/PcGarbage/src/main/computers.json";
 
     public ComputerRepository() {
         this.computers = new ArrayList<>();
