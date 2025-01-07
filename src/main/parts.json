@@ -1,0 +1,22 @@
+[
+  {
+    "type": "CPU",
+    "id": 1,
+    "name": "awdaw",
+    "brand": "awdawd",
+    "price": 343,
+    "socket": "LGA1151",
+    "frequency": 2.0,
+    "cores": 2,
+    "threads": 2
+  },
+  {
+    "type": "GPU",
+    "id": 2,
+    "name": "RTX 4090",
+    "brand": "nVidia",
+    "price": 1200,
+    "memory": "18",
+    "tflops": 2.34234234E8
+  }
+]
