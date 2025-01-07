@@ -5,9 +5,9 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import soft.urzi.models.parts.*;
 
 @JsonTypeInfo(
-        use = JsonTypeInfo.Id.NAME,       // Use a name identifier for the type
-        include = JsonTypeInfo.As.PROPERTY, // Include type info as a property in JSON
-        property = "type"                // Specify the property name for the type
+        use = JsonTypeInfo.Id.NAME,
+        include = JsonTypeInfo.As.PROPERTY,
+        property = "type"
 )
 @JsonSubTypes(value = {
         @JsonSubTypes.Type(value = CPU.class, name = "CPU"),

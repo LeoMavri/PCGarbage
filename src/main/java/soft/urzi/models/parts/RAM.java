@@ -1,11 +1,15 @@
 package soft.urzi.models.parts;
 
+import com.fasterxml.jackson.annotation.JsonTypeName;
 import soft.urzi.models.Part;
 
+@JsonTypeName("RAM")
 public class RAM extends Part {
     private double size;
     private double frequency;
     private int ddrType;
+
+    public String type = "RAM";
 
     public double getSize() {
         return size;

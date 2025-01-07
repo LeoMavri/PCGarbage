@@ -1,13 +1,17 @@
 package soft.urzi.models.parts;
 
+import com.fasterxml.jackson.annotation.JsonTypeName;
 import soft.urzi.models.Part;
 import soft.urzi.models.parts.enums.Size;
 import soft.urzi.models.parts.enums.Socket;
 
+@JsonTypeName("Motherboard")
 public class Motherboard extends Part {
     private Socket cpuSocket;
     private String chipset;
     private Size formFactor;
+
+    public String type = "Motherboard";
 
     public String getChipset() {
         return chipset;
@@ -30,6 +34,7 @@ public class Motherboard extends Part {
     }
 
     public void setCpuSocket(Socket cpuSocket) {
+        this.cpuSocket = cpuSocket;
     }
 
     @Override

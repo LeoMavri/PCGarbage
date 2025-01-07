@@ -1,11 +1,15 @@
 package soft.urzi.models.parts;
 
+import com.fasterxml.jackson.annotation.JsonTypeName;
 import soft.urzi.models.Part;
 import soft.urzi.models.parts.enums.Rating;
 
+@JsonTypeName("PSU")
 public class PSU extends Part {
     private Rating rating;
     private int wattage;
+
+    public String type = "PSU";
 
     public Rating getRating() {
         return rating;

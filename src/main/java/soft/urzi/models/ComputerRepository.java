@@ -8,6 +8,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class ComputerRepository implements IComputerRepository {
     private List<Computer> computers;
@@ -24,7 +25,7 @@ public class ComputerRepository implements IComputerRepository {
 
     @Override
     public void deleteComputer(Long id) {
-        computers.removeIf(computer -> computer.getId() == id);
+        computers.removeIf(computer -> Objects.equals(computer.getId(), id));
     }
 
     @Override
@@ -53,6 +54,7 @@ public class ComputerRepository implements IComputerRepository {
     @Override
     public void saveToDisk() {
         ObjectMapper objectMapper = new ObjectMapper();
+
         try {
             objectMapper.writeValue(new File(COMPUTERS_FILE), computers);
         } catch (IOException e) {

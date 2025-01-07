@@ -1,29 +1,30 @@
 [
   {
+    "type": "Case",
     "id": 1,
     "name": "Cooler Master NR200P",
     "brand": "Cooler Master",
     "price": 109,
-    "formFactor": "MicroATX",
-    "type": "Case"
+    "formFactor": "MicroATX"
   },
   {
+    "type": "Case",
     "id": 2,
     "name": "NZXT H510",
     "brand": "NZXT",
     "price": 79,
-    "formFactor": "ATX",
-    "type": "Case"
+    "formFactor": "ATX"
   },
   {
+    "type": "Case",
     "id": 3,
     "name": "Fractal Design Meshify C",
     "brand": "Fractal Design",
     "price": 99,
-    "formFactor": "ATX",
-    "type": "Case"
+    "formFactor": "ATX"
   },
   {
+    "type": "CPU",
     "id": 4,
     "name": "Intel Core i7 12700K",
     "brand": "Intel",
@@ -31,10 +32,10 @@
     "socket": "LGA1700",
     "frequency": 3.6,
     "cores": 12,
-    "threads": 20,
-    "type": "CPU"
+    "threads": 20
   },
   {
+    "type": "CPU",
     "id": 5,
     "name": "AMD Ryzen 9 5900X",
     "brand": "AMD",
@@ -42,10 +43,10 @@
     "socket": "AM4",
     "frequency": 3.7,
     "cores": 12,
-    "threads": 24,
-    "type": "CPU"
+    "threads": 24
   },
   {
+    "type": "CPU",
     "id": 6,
     "name": "Intel Core i5 13600K",
     "brand": "Intel",
@@ -53,148 +54,147 @@
     "socket": "LGA1700",
     "frequency": 3.5,
     "cores": 14,
-    "threads": 20,
-    "type": "CPU"
+    "threads": 20
   },
   {
+    "type": "GPU",
     "id": 7,
     "name": "NVIDIA GeForce RTX 3080",
     "brand": "NVIDIA",
     "price": 699,
     "memory": "10 GB",
-    "tflops": 29.77,
-    "type": "GPU"
+    "tflops": 29.77
   },
   {
+    "type": "GPU",
     "id": 8,
     "name": "AMD Radeon RX 6800 XT",
     "brand": "AMD",
     "price": 649,
     "memory": "16 GB",
-    "tflops": 20.74,
-    "type": "GPU"
+    "tflops": 20.74
   },
   {
+    "type": "GPU",
     "id": 9,
     "name": "NVIDIA GeForce RTX 4070",
     "brand": "NVIDIA",
     "price": 599,
     "memory": "12 GB",
-    "tflops": 30.64,
-    "type": "GPU"
+    "tflops": 30.64
   },
   {
+    "type": "Motherboard",
     "id": 10,
     "name": "ASUS ROG STRIX Z690-E",
     "brand": "ASUS",
     "price": 499,
     "cpuSocket": "LGA1700",
     "chipset": "Z690",
-    "formFactor": "ATX",
-    "type": "Motherboard"
+    "formFactor": "ATX"
   },
   {
+    "type": "Motherboard",
     "id": 11,
     "name": "Gigabyte B550 AORUS Master",
     "brand": "Gigabyte",
     "price": 279,
     "cpuSocket": "AM4",
     "chipset": "B550",
-    "formFactor": "ATX",
-    "type": "Motherboard"
+    "formFactor": "ATX"
   },
   {
+    "type": "Motherboard",
     "id": 12,
     "name": "MSI MAG B660M Mortar",
     "brand": "MSI",
     "price": 229,
     "cpuSocket": "LGA1700",
     "chipset": "B660",
-    "formFactor": "MicroATX",
-    "type": "Motherboard"
+    "formFactor": "MicroATX"
   },
   {
+    "type": "PSU",
     "id": 13,
     "name": "Corsair RM850x",
     "brand": "Corsair",
     "price": 149,
-    "rating": "Gold",
     "wattage": 850,
-    "type": "PSU"
+    "rating": "Gold"
   },
   {
+    "type": "PSU",
     "id": 14,
     "name": "EVGA 600 W1",
     "brand": "EVGA",
     "price": 39,
-    "rating": "Bronze",
     "wattage": 600,
-    "type": "PSU"
+    "rating": "Bronze"
   },
   {
+    "type": "PSU",
     "id": 15,
     "name": "Seasonic Focus GX-750",
     "brand": "Seasonic",
     "price": 129,
-    "rating": "Gold",
     "wattage": 750,
-    "type": "PSU"
+    "rating": "Gold"
   },
   {
+    "type": "RAM",
     "id": 16,
     "name": "Corsair Vengeance LPX",
     "brand": "Corsair",
     "price": 75,
-    "size": 16.0,
-    "frequency": 3200.0,
-    "ddrType": 4,
-    "type": "RAM"
+    "size": 16,
+    "frequency": 3200,
+    "ddrType": 4
   },
   {
+    "type": "RAM",
     "id": 17,
     "name": "G.Skill Trident Z RGB",
     "brand": "G.Skill",
     "price": 129,
-    "size": 32.0,
-    "frequency": 3600.0,
-    "ddrType": 4,
-    "type": "RAM"
+    "size": 32,
+    "frequency": 3600,
+    "ddrType": 4
   },
   {
+    "type": "RAM",
     "id": 18,
     "name": "Kingston Fury Beast",
     "brand": "Kingston",
     "price": 99,
-    "size": 16.0,
-    "frequency": 3200.0,
-    "ddrType": 5,
-    "type": "RAM"
+    "size": 16,
+    "frequency": 3200,
+    "ddrType": 5
   },
   {
+    "type": "Storage",
     "id": 19,
     "name": "Samsung 970 EVO Plus",
     "brand": "Samsung",
     "price": 129,
-    "capacity": 1000.0,
-    "storageType": "SSD",
-    "type": "Storage"
+    "capacity": 1000,
+    "storageType": "SSD"
   },
   {
+    "type": "Storage",
     "id": 20,
     "name": "WD Blue SN570",
     "brand": "Western Digital",
     "price": 59,
-    "capacity": 500.0,
-    "storageType": "SSD",
-    "type": "Storage"
+    "capacity": 500,
+    "storageType": "SSD"
   },
   {
+    "type": "Storage",
     "id": 21,
     "name": "Seagate Barracuda",
     "brand": "Seagate",
     "price": 49,
-    "capacity": 2000.0,
-    "storageType": "HDD",
-    "type": "Storage"
+    "capacity": 2000,
+    "storageType": "HDD"
   }
 ]

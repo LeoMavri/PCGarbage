@@ -1,10 +1,14 @@
 package soft.urzi.models.parts;
 
+import com.fasterxml.jackson.annotation.JsonTypeName;
 import soft.urzi.models.Part;
 
+@JsonTypeName("GPU")
 public class GPU extends Part {
     private String memory;
     private double tflops;
+
+    public String type = "GPU";
 
     public double getTflops() {
         return tflops;

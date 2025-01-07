@@ -2,6 +2,7 @@ package soft.urzi.models;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import soft.urzi.models.parts.*;
 
 import java.io.File;
 import java.io.IOException;
@@ -55,7 +56,26 @@ public class PartsRepository implements soft.urzi.interfaces.IPartsRepository {
 
     @Override
     public void saveToDisk() {
+        for (Part part : parts) {
+            if (part instanceof CPU) {
+                ((CPU) part).type = "CPU";
+            } else if (part instanceof GPU) {
+                ((GPU) part).type = "GPU";
+            } else if (part instanceof Storage) {
+                ((Storage) part).type = "Storage";
+            } else if (part instanceof Case) {
+                ((Case) part).type = "Case";
+            } else if (part instanceof PSU) {
+                ((PSU) part).type = "PSU";
+            } else if (part instanceof RAM) {
+                ((RAM) part).type = "RAM";
+            } else if (part instanceof Motherboard) {
+                ((Motherboard) part).type = "Motherboard";
+            }
+        }
+
         ObjectMapper objectMapper = new ObjectMapper();
+
         try {
             objectMapper.writeValue(new File(PARTS_FILE), parts);
         } catch (IOException e) {

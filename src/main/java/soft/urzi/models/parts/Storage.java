@@ -1,11 +1,14 @@
 package soft.urzi.models.parts;
 
+import com.fasterxml.jackson.annotation.JsonTypeName;
 import soft.urzi.models.Part;
 import soft.urzi.models.parts.enums.StorageType;
 
+@JsonTypeName("Storage")
 public class Storage extends Part {
     private double capacity; // capacity (in GB)
-    private StorageType type;
+    public String type = "Storage";
+    private StorageType storageType;
 
     public double getCapacity() {
         return capacity;
@@ -15,16 +18,16 @@ public class Storage extends Part {
         this.capacity = capacity;
     }
 
-    public StorageType getType() {
-        return type;
+    public StorageType getStorageType() {
+        return storageType;
     }
 
-    public void setType(StorageType type) {
-        this.type = type;
+    public void setStorageType(StorageType storageType) {
+        this.storageType = storageType;
     }
 
     @Override
     public String toString() {
-        return super.toString() + "Capacity: " + capacity + "\nType: " + type + "\n";
+        return super.toString() + "Capacity: " + capacity + "\nType: " + storageType + "\n";
     }
 }

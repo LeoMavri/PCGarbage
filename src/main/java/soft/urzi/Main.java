@@ -11,6 +11,7 @@ import soft.urzi.models.parts.enums.Socket;
 import soft.urzi.models.parts.enums.StorageType;
 
 import java.util.Arrays;
+import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
 
@@ -26,30 +27,35 @@ public class Main {
 
         Scanner scanner = new Scanner(System.in);
         while (true) {
-            System.out.println("\n--- Main Menu ---");
-            System.out.println("1. View all parts");
-            System.out.println("2. View all computers");
-            System.out.println("3. Add a part");
-            System.out.println("4. Build a new computer");
-            System.out.println("5. Exit");
-            System.out.print("Choose an option: ");
-            int choice = scanner.nextInt();
-            scanner.nextLine();
+            try {
+                System.out.println("\n--- Main Menu ---");
+                System.out.println("1. View all parts");
+                System.out.println("2. View all computers");
+                System.out.println("3. Add a part");
+                System.out.println("4. Build a new computer");
+                System.out.println("5. Exit");
+                System.out.print("Choose an option: ");
+                int choice = scanner.nextInt();
+                scanner.nextLine();
 
-            switch (choice) {
-                case 1 -> viewAllParts();
-                case 2 -> viewAllComputers();
-                case 3 -> addPart(scanner);
-                case 4 -> buildComputer(scanner);
-                case 5 -> {
-                    scanner.close();
-                    partsRepository.saveToDisk();
-                    computerRepository.saveToDisk();
-                    System.out.println("Saved to disk.");
-                    System.out.println("Exiting... Goodbye!");
-                    return;
+                switch (choice) {
+                    case 1 -> viewAllParts();
+                    case 2 -> viewAllComputers();
+                    case 3 -> addPart(scanner);
+                    case 4 -> buildComputer(scanner);
+                    case 5 -> {
+                        scanner.close();
+                        partsRepository.saveToDisk();
+                        computerRepository.saveToDisk();
+                        System.out.println("Saved to disk.");
+                        System.out.println("Exiting... Goodbye!");
+                        return;
+                    }
+                    default -> System.out.println("Invalid choice. Please try again.");
                 }
-                default -> System.out.println("Invalid choice. Please try again.");
+            } catch (InputMismatchException e) {
+                System.out.println("Invalid input. Please enter a number.");
+                scanner.nextLine(); // Clear invalid input
             }
         }
     }
@@ -152,7 +158,7 @@ public class Main {
                 scanner.nextLine();
 
                 System.out.print("Enter storage type (e.g., SSD, HDD): ");
-                storage.setType(StorageType.valueOf(scanner.nextLine()));
+                storage.setStorageType(StorageType.valueOf(scanner.nextLine()));
             }
             case Case computerCase -> {
                 System.out.print("Enter form factor (e.g., ATX, MicroATX): ");
@@ -198,42 +204,181 @@ public class Main {
         System.out.println("\n--- Build a New Computer ---");
         Computer computer = new Computer();
 
+        // Set computer name
         System.out.print("Enter computer name: ");
         computer.setName(scanner.nextLine());
 
-        System.out.println("Choose a CPU:");
-        List<Part> cpus = partsRepository.getAllParts().stream().filter(part -> part instanceof CPU).toList();
+        // Choose CPU
+        System.out.println("\nChoose a CPU:");
+        List<Part> cpus = partsRepository.getAllParts().stream()
+                .filter(part -> part instanceof CPU)
+                .toList();
+
         if (cpus.isEmpty()) {
             System.out.println("No CPUs available. Add a CPU first.");
             return;
         }
-        cpus.forEach(cpu -> System.out.println("ID: " + cpu.getId() + ", Name: " + cpu.getName()));
+
+        cpus.forEach(cpu -> System.out.println(cpu.getId() + ": " + cpu.getName() + " (" + cpu.getBrand() + ")"));
+        System.out.print("Enter CPU ID: ");
         long cpuId = scanner.nextLong();
         scanner.nextLine(); // Consume newline
+
         CPU selectedCPU = (CPU) partsRepository.getPartById(cpuId);
+        if (selectedCPU == null) {
+            System.out.println("Invalid CPU ID! Operation aborted.");
+            return;
+        }
         computer.setCpu(selectedCPU);
 
-        System.out.println("Choose a Motherboard:");
-        List<Part> motherboards = partsRepository.getAllParts().stream().filter(part -> part instanceof Motherboard).toList();
+        // Choose Motherboard
+        System.out.println("\nChoose a Motherboard:");
+        List<Part> motherboards = partsRepository.getAllParts().stream()
+                .filter(part -> part instanceof Motherboard)
+                .toList();
+
         if (motherboards.isEmpty()) {
             System.out.println("No motherboards available. Add a motherboard first.");
             return;
         }
-        motherboards.forEach(mb -> System.out.println("ID: " + mb.getId() + ", Name: " + mb.getName()));
+
+        motherboards.forEach(mb -> System.out.println(mb.getId() + ": " + mb.getName() + " (" + mb.getBrand() + ")"));
+        System.out.print("Enter Motherboard ID: ");
         long motherboardId = scanner.nextLong();
         scanner.nextLine(); // Consume newline
-        Motherboard selectedMotherboard = (Motherboard) partsRepository.getPartById(motherboardId);
 
-        // Check compatibility
+        Motherboard selectedMotherboard = (Motherboard) partsRepository.getPartById(motherboardId);
+        if (selectedMotherboard == null) {
+            System.out.println("Invalid Motherboard ID! Operation aborted.");
+            return;
+        }
+
+        // Compatibility check: CPU and Motherboard sockets should match
         if (!selectedCPU.getSocket().equals(selectedMotherboard.getCpuSocket())) {
-            System.out.println("Compatibility error: CPU socket and motherboard socket do not match.");
+            System.out.println("Compatibility error: Selected CPU socket (" + selectedCPU.getSocket() +
+                    ") and Motherboard socket (" + selectedMotherboard.getCpuSocket() + ") do not match.");
             return;
         }
         computer.setMotherboard(selectedMotherboard);
 
-        // Add more parts (GPU, RAM, etc.) as needed...
+        // Choose GPU
+        System.out.println("\nChoose a GPU:");
+        List<Part> gpus = partsRepository.getAllParts().stream()
+                .filter(part -> part instanceof GPU)
+                .toList();
 
+        if (gpus.isEmpty()) {
+            System.out.println("No GPUs available. Add a GPU first.");
+        } else {
+            gpus.forEach(gpu -> System.out.println(gpu.getId() + ": " + gpu.getName() + " (" + gpu.getBrand() + ")"));
+            System.out.print("Enter GPU ID (or 0 to skip): ");
+            long gpuId = scanner.nextLong();
+            scanner.nextLine(); // Consume newline
+
+            if (gpuId != 0) {
+                GPU selectedGPU = (GPU) partsRepository.getPartById(gpuId);
+                if (selectedGPU == null) {
+                    System.out.println("Invalid GPU ID! Operation aborted.");
+                    return;
+                }
+                computer.setGpu(selectedGPU);
+            }
+        }
+
+        // Choose RAM
+        System.out.println("\nChoose RAM:");
+        List<Part> rams = partsRepository.getAllParts().stream()
+                .filter(part -> part instanceof RAM)
+                .toList();
+
+        if (rams.isEmpty()) {
+            System.out.println("No RAMs available. Add RAM first.");
+            return;
+        }
+
+        rams.forEach(ram -> System.out.println(ram.getId() + ": " + ram.getName() + " (" + ram.getBrand() + ")"));
+        System.out.print("Enter RAM ID: ");
+        long ramId = scanner.nextLong();
+        scanner.nextLine(); // Consume newline
+
+        RAM selectedRAM = (RAM) partsRepository.getPartById(ramId);
+        if (selectedRAM == null) {
+            System.out.println("Invalid RAM ID! Operation aborted.");
+            return;
+        }
+        computer.setRam(selectedRAM);
+
+        // Choose Storage
+        System.out.println("\nChoose a Storage Device:");
+        List<Part> storages = partsRepository.getAllParts().stream()
+                .filter(part -> part instanceof Storage)
+                .toList();
+
+        if (storages.isEmpty()) {
+            System.out.println("No Storage devices available. Add one first.");
+            return;
+        }
+
+        storages.forEach(storage -> System.out.println(storage.getId() + ": " + storage.getName() + " (" + storage.getBrand() + ")"));
+        System.out.print("Enter Storage ID: ");
+        long storageId = scanner.nextLong();
+        scanner.nextLine(); // Consume newline
+
+        Storage selectedStorage = (Storage) partsRepository.getPartById(storageId);
+        if (selectedStorage == null) {
+            System.out.println("Invalid Storage ID! Operation aborted.");
+            return;
+        }
+        computer.setStorage(selectedStorage);
+
+        // Choose PSU
+        System.out.println("\nChoose a PSU:");
+        List<Part> psus = partsRepository.getAllParts().stream()
+                .filter(part -> part instanceof PSU)
+                .toList();
+
+        if (psus.isEmpty()) {
+            System.out.println("No PSUs available. Add a PSU first.");
+            return;
+        }
+
+        psus.forEach(psu -> System.out.println(psu.getId() + ": " + psu.getName() + " (" + psu.getBrand() + ")"));
+        System.out.print("Enter PSU ID: ");
+        long psuId = scanner.nextLong();
+        scanner.nextLine(); // Consume newline
+
+        PSU selectedPSU = (PSU) partsRepository.getPartById(psuId);
+        if (selectedPSU == null) {
+            System.out.println("Invalid PSU ID! Operation aborted.");
+            return;
+        }
+        computer.setPsu(selectedPSU);
+
+        // Choose Case
+        System.out.println("\nChoose a Case:");
+        List<Part> cases = partsRepository.getAllParts().stream()
+                .filter(part -> part instanceof Case)
+                .toList();
+
+        if (cases.isEmpty()) {
+            System.out.println("No Cases available. Add a Case first.");
+            return;
+        }
+
+        cases.forEach(c -> System.out.println(c.getId() + ": " + c.getName() + " (" + c.getBrand() + ")"));
+        System.out.print("Enter Case ID: ");
+        long caseId = scanner.nextLong();
+        scanner.nextLine(); // Consume newline
+
+        Case selectedCase = (Case) partsRepository.getPartById(caseId);
+        if (selectedCase == null) {
+            System.out.println("Invalid Case ID! Operation aborted.");
+            return;
+        }
+        computer.setComputerCase(selectedCase);
+
+        // Save the computer
         computerRepository.addComputer(computer);
-        System.out.println("Computer built successfully!");
+        System.out.println("\nComputer built successfully!");
     }
 }

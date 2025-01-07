@@ -1,5 +1,6 @@
 package soft.urzi.models;
 
+import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import soft.urzi.models.parts.*;
 
@@ -7,10 +8,7 @@ import java.io.File;
 import java.io.IOException;
 
 public class Computer implements soft.urzi.interfaces.IComputer {
-    private static Long id = 0L;
     private static final String ID_FILE = "/home/mavri/Documents/PcGarbage/src/main/computer_id.json";
-
-    private final Long computerId;
     private String name;
 
     private Case computerCase;
@@ -20,10 +18,34 @@ public class Computer implements soft.urzi.interfaces.IComputer {
     private RAM ram;
     private Storage storage;
     private PSU psu;
+    private static Long currentId = 0L; // Static shared variable for generating unique IDs
+    // Remove `static` from ID
+    private Long computerId;
 
     // Constructor
     public Computer() {
-        this.computerId = getNextId();
+        this.computerId = getNextId(); // Assign a unique ID to each instance
+    }
+
+    // Generate the next unique ID
+    private static synchronized Long getNextId() {
+        loadId(); // Ensure the current ID is loaded from file
+        currentId++; // Increment the ID
+        saveId(); // Persist the new ID to the file
+        return currentId; // Return the incremented ID
+    }
+
+    // Load the ID from the persistent `ID_FILE`
+    private static void loadId() {
+        ObjectMapper objectMapper = new ObjectMapper();
+        try {
+            File file = new File(ID_FILE);
+            if (file.exists()) {
+                currentId = objectMapper.readValue(file, Long.class);
+            }
+        } catch (IOException e) {
+            System.err.println("Failed to load ID from file: " + e.getMessage());
+        }
     }
 
     @Override
@@ -111,35 +133,34 @@ public class Computer implements soft.urzi.interfaces.IComputer {
         this.psu = psu;
     }
 
-    private static synchronized Long getNextId() {
-        loadId(); // Ensure the ID is loaded before use
-        id++;
-        saveId(); // Persist the updated ID
-        return id;
-    }
-
-    private static void loadId() {
-        ObjectMapper objectMapper = new ObjectMapper();
-        try {
-            File file = new File(ID_FILE);
-            if (file.exists()) {
-                id = objectMapper.readValue(file, Long.class);
-            }
-        } catch (IOException e) {
-            System.err.println("Failed to load ID from file: " + e.getMessage());
-        }
-    }
-
+    // Save the current ID to the persistent `ID_FILE`
     private static void saveId() {
         ObjectMapper objectMapper = new ObjectMapper();
         try {
-            objectMapper.writeValue(new File(ID_FILE), id);
+            objectMapper.writeValue(new File(ID_FILE), currentId);
         } catch (IOException e) {
             System.err.println("Failed to save ID to file: " + e.getMessage());
         }
     }
 
+    @JsonGetter("id") // Ensure this maps properly during serialization
+    public Long getComputerId() {
+        return computerId;
+    }
+
+    public void setComputerId(Long computerId) {
+        this.computerId = computerId; // Allow setting ID manually during deserialization if needed
+    }
+
+    @Override
     public String toString() {
-        return "Name: " + name + "\nCase: " + computerCase + "\nMotherboard: " + motherboard + "\nCPU: " + cpu + "\nGPU: " + gpu + "\nRAM: " + ram + "\nStorage: " + storage + "\nPSU: " + psu + "\n";
+        return "ID: " + computerId + "\nName: " + name +
+                "\nCase: " + computerCase +
+                "\nMotherboard: " + motherboard +
+                "\nCPU: " + cpu +
+                "\nGPU: " + gpu +
+                "\nRAM: " + ram +
+                "\nStorage: " + storage +
+                "\nPSU: " + psu + "\n";
     }
 }

@@ -1,13 +1,17 @@
 package soft.urzi.models.parts;
 
+import com.fasterxml.jackson.annotation.JsonTypeName;
 import soft.urzi.models.Part;
 import soft.urzi.models.parts.enums.Socket;
 
+@JsonTypeName("CPU")
 public class CPU extends Part {
     private Socket socket;
     private double frequency;
     private int cores;
     private int threads;
+
+    public String type = "CPU";
 
     public double getFrequency() {
         return frequency;
