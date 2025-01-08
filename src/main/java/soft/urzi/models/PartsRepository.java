@@ -105,7 +105,7 @@ public class PartsRepository implements soft.urzi.interfaces.IPartsRepository {
      *
      * @return the next unique ID as a Long
      */
-    private static synchronized Long getNextId() {
+    public static synchronized Long getNextId() {
         return ++idCounter;
     }
 

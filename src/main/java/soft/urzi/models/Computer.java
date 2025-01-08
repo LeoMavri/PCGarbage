@@ -18,24 +18,20 @@ public class Computer implements soft.urzi.interfaces.IComputer {
     private RAM ram;
     private Storage storage;
     private PSU psu;
-    private static Long currentId = 0L; // Static shared variable for generating unique IDs
-    // Remove `static` from ID
+    private static Long currentId = 0L;
     private Long computerId;
 
-    // Constructor
     public Computer() {
-        this.computerId = getNextId(); // Assign a unique ID to each instance
+        this.computerId = getNextId();
     }
 
-    // Generate the next unique ID
     private static synchronized Long getNextId() {
-        loadId(); // Ensure the current ID is loaded from file
-        currentId++; // Increment the ID
-        saveId(); // Persist the new ID to the file
-        return currentId; // Return the incremented ID
+        loadId();
+        currentId++;
+        saveId();
+        return currentId;
     }
 
-    // Load the ID from the persistent `ID_FILE`
     private static void loadId() {
         ObjectMapper objectMapper = new ObjectMapper();
         try {
@@ -133,7 +129,6 @@ public class Computer implements soft.urzi.interfaces.IComputer {
         this.psu = psu;
     }
 
-    // Save the current ID to the persistent `ID_FILE`
     private static void saveId() {
         ObjectMapper objectMapper = new ObjectMapper();
         try {
@@ -143,13 +138,13 @@ public class Computer implements soft.urzi.interfaces.IComputer {
         }
     }
 
-    @JsonGetter("id") // Ensure this maps properly during serialization
+    @JsonGetter("id")
     public Long getComputerId() {
         return computerId;
     }
 
     public void setComputerId(Long computerId) {
-        this.computerId = computerId; // Allow setting ID manually during deserialization if needed
+        this.computerId = computerId;
     }
 
     @Override
